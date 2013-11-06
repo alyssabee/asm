@@ -1,8 +1,11 @@
 
-/*
-* test.s prints a message to console using system calls
-*/
-
+#
+# test.s prints a message to console using system calls
+#
+#  to compile: 
+#        as test.s -o test
+#	 ld test -o runtest
+#
 
 .global _start
 
