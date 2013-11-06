@@ -1,4 +1,8 @@
 
+/*
+* test.s prints a message to console using system calls
+*/
+
 
 .global _start
 
@@ -6,13 +10,13 @@
 
 _start:
 
-	mov	$0x4, %eax
-	mov	$1, %ebx
-	mov	$message, %ecx
-	mov	$10, %edx
-	int	$0x80
+	movl	$0x4, %eax		# 4 is system call for print
+	movl	$1, %ebx		# 1 = standard output
+	movl	$message, %ecx		# address of message
+	movl	$10, %edx		# length
+	int	$0x80			# interrupt
 
-	mov	$1, %eax
+	movl	$1, %eax		# 1 is system call for exit
 	int	$0x80
 
 message:
