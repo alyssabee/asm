@@ -1,13 +1,11 @@
 
-.global _call
-
 
 .text
-.func move
-_call:
 
+.set WRITESTRING, 4
 
-	movl $0x4, %eax
-	
+.func INTERRUPT
+
+	int	$0x80
+
 .endfunc
-
