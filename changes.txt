@@ -6,4 +6,8 @@ Tracking changes made to project...
 
 11-6-13:
 	Attempted to use an include in test.s. A simple function to move 
-	the value 4 to EAX. Currently does not work. 
+	the value 4 to EAX. Currently does not work.
+11-10-13:
+	Replaced files with test.s and testinc.s, testinc.s will become a 
+	function library.
+ 
