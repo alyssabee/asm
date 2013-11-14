@@ -15,7 +15,9 @@ _start:
 
 	movl $EXITP, %eax
 	xor %ebx,%ebx
-	int $0x80
+	int $SYSCALL
 
 message:
-	.asciz "Front\0"
+	.asciz "\n\n\n\n\n\n\n"
+
+
