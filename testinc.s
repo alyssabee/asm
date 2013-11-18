@@ -7,7 +7,8 @@
 # TODO: Clean up code. Fix issue with null comparison starting at
 #	index 1 of string. Starting with index 0 would keep
 #	empty strings from causing issues. 
-#  			  	
+#  	
+.code32		  	
 .text
 .set EXITP, 1
 .set SYSCALL, 0x80
@@ -30,18 +31,45 @@
 		xorb %al, %al
 		xorl %edx, %edx
 		movl %ecx, %ebx
-		xorl %esi, %esi
-	begin_loop:
+	
+	begin_loop1:
 		inc %ecx
 		inc %edx
 		cmpb (%ecx), %al
-		jnz begin_loop
+		jnz begin_loop1
 		
-	
 		movl %ebx, %ecx			
 		movl $WRITE, %eax
 		movl $STD_OUT, %ebx
 		int $SYSCALL
 		ret
+#
+# clear_screen: 
+#	Clears console (60 lines)
+#
+#
+.type clear_screen, @function
+	clear_screen:
+		movl $60, %ecx
+	begin_loop2:
+       	        pushl %ecx
+
+        	movl $WRITE, %eax
+        	movl $STD_OUT, %ebx
+        	movl $nl, %ecx
+        	movl $1, %edx
+        	int $SYSCALL
+       	        popl %ecx
+	        loop begin_loop2
+		ret
 
 
+
+
+
+# new line character
+nl: 
+	.byte 0xA
+
+test1:
+	.byte 0x0
