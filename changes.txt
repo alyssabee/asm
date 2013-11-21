@@ -7,7 +7,10 @@ Tracking changes made to project...
 11-6-13:
 	Attempted to use an include in test.s. A simple function to move 
 	the value 4 to EAX. Currently does not work.
+
 11-10-13:
 	Replaced files with test.s and testinc.s, testinc.s will become a 
 	function library.
- 
+
+11-21-13
+	Created rudimentary str_len function and clear_screen function.  
