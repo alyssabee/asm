@@ -11,14 +11,14 @@ _start:
 	mov $message, %ecx
 	
 
-	#call print_string
+	call print_string
 	
-	call clear_screen
+#	call clear_screen
 	movl $EXITP, %eax
 	xor %ebx,%ebx
 	int $SYSCALL
 
 message:
-	.asciz "\n\n\n\n\n\n\n"
+	.asciz "\n\n\n\n\n\n"
 
 

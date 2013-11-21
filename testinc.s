@@ -4,16 +4,38 @@
 # checks length, sets appropriate registers for the write
 # syscall
 #
-# TODO: Clean up code. Fix issue with null comparison starting at
+# TODO: 1.  Clean up code. Fix issue with null comparison starting at
 #	index 1 of string. Starting with index 0 would keep
 #	empty strings from causing issues. 
+#	2.  str_len has been introduced, this library uses registers to 
+#	pass parameters. System calls require this, but can probably
+#       utilize the stack to pass parameters. 
+#       3.  Functions need to be wired together in a way that makes 
+#       sense. str_len will probably show undefined behavior 
+#       when called outside of print_string. 
+#      
 #  	
-.code32		  	
+	
 .text
 .set EXITP, 1
 .set SYSCALL, 0x80
 .set WRITE, 4
 .set STD_OUT, 1
+#
+# str_len: Returns length of string. 
+#
+.type str_len, @function
+	str_len:
+		xorb %al, %al
+                xorl %edx, %edx
+                movl %ecx, %ebx
+
+        begin_loop1:
+                inc %ecx
+                inc %edx
+                cmpb (%ecx), %al
+                jnz begin_loop1
+		ret
 #
 # print_string: Prints string to screen with write system call. 
 # 
@@ -28,16 +50,7 @@
 #
 .type print_string, @function
 	print_string:
-		xorb %al, %al
-		xorl %edx, %edx
-		movl %ecx, %ebx
-	
-	begin_loop1:
-		inc %ecx
-		inc %edx
-		cmpb (%ecx), %al
-		jnz begin_loop1
-		
+		call str_len		
 		movl %ebx, %ecx			
 		movl $WRITE, %eax
 		movl $STD_OUT, %ebx
@@ -52,14 +65,14 @@
 	clear_screen:
 		movl $60, %ecx
 	begin_loop2:
-       	        pushl %ecx
+       	        pushq %rcx
 
         	movl $WRITE, %eax
         	movl $STD_OUT, %ebx
         	movl $nl, %ecx
         	movl $1, %edx
         	int $SYSCALL
-       	        popl %ecx
+       	        popq %rcx
 	        loop begin_loop2
 		ret
 
